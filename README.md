@@ -1,13 +1,9 @@
-# GraphLinq.Mobile
+# NativeBase TypeScript Expo Template
 
-Built on React Native, GraphLinq.Mobile allows you to manage your Graphs from any device.
+The official NativeBase TypeScript template for [Expo](https://docs.expo.io/)
 
-React Native apps can be compiled for the Web, Android, and iOS.
+## Usage
 
-Ability to view all graphs current status, external url, id
-Ability to start stop reset force start delete.
-Ability to view the logs.
-
-## Beta Testing
-
-Coming soon...
+```sh
+expo init my-app --template @native-base/expo-template-typescript
+```

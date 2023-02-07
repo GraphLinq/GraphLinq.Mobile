@@ -1,9 +1,3 @@
-# NativeBase TypeScript Expo Template
+# GraphLinq.Mobile
 
-The official NativeBase TypeScript template for [Expo](https://docs.expo.io/)
-
-## Usage
-
-```sh
-expo init my-app --template @native-base/expo-template-typescript
-```
+GraphLinq Mobile App for managing Graphs from a mobile device. 

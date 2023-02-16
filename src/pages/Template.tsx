@@ -130,8 +130,8 @@ const Templates: React.FC<TemplatesProps> = ({ }) => {
             <Text color="#aba1ca" fontSize={"md"} > - Download it </Text>
             <Text color="#aba1ca" fontSize={"md"} > - Upload & Edit On the <Link href="https://ide.graphlinq.io" color="blue.900" fontSize={"md"}>IDE</Link><Text> to suit their needs</Text>
             </Text>
-            <Text color="#aba1ca" fontSize={"md"} textAlign="center">
-              You can also make your own custom Graph from scratch using our <Link href="https://ide.graphlinq.io" color="blue.900" fontSize={"md"}>IDE </Link>
+            <Text color="#aba1ca" fontSize={"sm"} textAlign="center" my={'3'}>
+              Advanced users can visit our <Link href="https://ide.graphlinq.io" color="blue.900" fontSize={"sm"}>IDE</Link> on a desktop/laptop computer to take full advantage of creating a custom graph from scratch or editing an existing template to suit their needs.
             </Text>
           </Box>
         </VStack>

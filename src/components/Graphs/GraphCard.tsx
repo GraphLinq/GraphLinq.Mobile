@@ -185,7 +185,7 @@ const GraphCard : React.FC<GraphCardProps> = ({
         <NativeBaseProvider theme={theme}>
       <View bg="darkBlue.900">
         <ScrollView flexDirection={"column"} py='3'>
-          <Modal onClose={onClose} isOpen={isOpen} size="lg" borderColor={'transparent'}>
+          <Modal onClose={onClose} isOpen={isOpen} size="lg" borderColor={'transparent'} shadow={'1'}>
             <Modal.Content borderRadius={'15'} maxH='300'>
               <Modal.Header bg="rgb(32,27,64)" borderColor={'transparent'} h='50' justifyContent={'center'} alignItems='flex-start' pl='5'><Text color='white' fontSize='xl' bold>Logs</Text></Modal.Header>
               <Modal.CloseButton />

@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { WALLET_UPDATE } from "../redux/actions";
 import { useWeb3React } from "@web3-react/core";
 import { ManagedResponse } from "../providers/responses/managed";
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const windowWidth = Dimensions.get('screen').width;
 const windowHeight = Dimensions.get('screen').height;
@@ -35,7 +36,8 @@ const Wallets = (props: any) => {
     const dispatch = useDispatch();
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-    const { hasCopied, onCopy } = useClipboard()
+
+    const [ hasCopied, onCopy ] = useState("Copy");
 
     const walletList: ManagedResponse[] = useSelector((state: any) => state.modals.wallets.list);
 
@@ -112,8 +114,8 @@ const Wallets = (props: any) => {
                                 color={'white'}
                                 my='3'
                             />
-                            <Button onPress={()=> onCopy} bg='darkBlue.900' w='80%'>
-                                {hasCopied ? "Copied" : "Copy"}
+                            <Button onPress={()=> {onCopy("Copied"); Clipboard.setString(success);}} bg='darkBlue.900' w='80%'>
+                                {hasCopied}
                             </Button>
                         </Box>
                     </View>

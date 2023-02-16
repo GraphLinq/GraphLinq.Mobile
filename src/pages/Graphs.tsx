@@ -100,7 +100,7 @@ const graphs = (props: any) => {
               isExternal _text={{color:'amber.600'}}
               _hover={{ color: 'amber.700' }}
               display={{ base: 'block', sm: 'revert' }}
-              >documentation</Link>
+              >documentation </Link>
               to start your journey.
             </Text>
           </View>

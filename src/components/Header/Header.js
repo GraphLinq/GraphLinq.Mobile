@@ -1,5 +1,5 @@
 import React,{useState, useEffect, useContext} from 'react';
-import {Icon, Pressable, View, Text,Box,Modal, VStack, NativeBaseProvider, extendTheme} from 'native-base';
+import {Icon, Pressable, View, Text,Box,Modal, VStack, NativeBaseProvider, extendTheme, Menu, Link} from 'native-base';
 import {StyleSheet, Dimensions} from 'react-native';
 import { Entypo,Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -17,15 +17,18 @@ export default function Header(props){
   const menuItems =[{
     id: 1,
     name : "book-outline",
-    desc : "Documentation"
+    desc : "Documentation",
+      link : "https://docs.graphlinq.io"
   }, {
     id: 2,
     name : "chatbubble-outline",
-    desc : "Discord"
+    desc : "Discord",
+      link : "https://discord.gg/w3qG33vNp9"
   }, {
     id: 3,
     name : "chatbox-outline",
-    desc : "Telegram"
+    desc : "Telegram",
+      link : "https://t.me/graphlinq"
   }
   ];
 
@@ -132,9 +135,22 @@ const navigation = useNavigation();
           </VStack>
         )
         }
-        <Pressable onPress={()=> setDetailModalVisible(true)} >
-          <Icon size="4xl" as={Ionicons} name={"ellipsis-vertical-circle-outline"} color="#aba1ca" />
-        </Pressable>
+        {/*<Pressable onPress={()=> setDetailModalVisible(true)} >*/}
+        {/*  <Icon size="4xl" as={Ionicons} name={"ellipsis-vertical-circle-outline"} color="#aba1ca" />*/}
+        {/*</Pressable>*/}
+
+          <Menu w="200" bg={'darkBlue.900'} trigger={triggerProps => {
+              return <Pressable accessibilityLabel="More options menu" {...triggerProps}>
+                  <Icon size="4xl" as={Ionicons} name={"ellipsis-vertical-circle-outline"} color="#aba1ca" />
+              </Pressable>;
+          }}>
+              {menuItems.map((item) => {
+                  return <Menu.Item key={item.id} isDisabled={'true'} flexDirection={'row'} alignItems={'center'}>
+                              <Icon as={Ionicons} name={item.name} size="sm" color={"blue.900"} mr={'3'}/>
+                              <Link href={item.link}  isUnderlined={false} isExternal _text={{fontSize:'sm', color:'white', flex:'1'}}>{item.desc}</Link>
+                      </Menu.Item>
+              })}
+          </Menu>
       </View>
     </View>
   </NativeBaseProvider>

@@ -1,17 +1,20 @@
 import React,{useEffect, useRef, useState} from "react";
 import {
-  Text,
-  Link,
-  HStack,
-  VStack,
-  Box,
-  ScrollView,
-  Pressable,
-  View,
-  Button,
-  Icon,
-  Modal,
-  useDisclose,
+    Text,
+    Link,
+    HStack,
+    VStack,
+    Box,
+    ScrollView,
+    Pressable,
+    View,
+    Button,
+    Icon,
+    Modal,
+    useDisclose,
+    Menu,
+    extendTheme,
+    NativeBaseProvider
 } from "native-base";
 
 import { Dimensions } from 'react-native';
@@ -23,6 +26,17 @@ import GraphService from '../../services/graphService';
 import { Log } from '../../providers/responses/logs';
 
 const LinearGradient = require('expo-linear-gradient').LinearGradient ;
+
+const theme = extendTheme({
+    shadows:{
+        "1": {
+            "box-shadow": "0 0 35px rgba(56,8,255,0.3), 0 0 15px rgb(7,125,255,0.5), 0 0 0 1px rgb(7,125,255,0.5)"
+        },
+        "0": {
+            "box-shadow": "0 0 35px rgba(0,0,0,.1), 0 0 15px rgba(0,0,0,.3), 0 0 0 1px rgba(0,0,0,.3)"
+        }
+    }
+});
 
 interface GraphCardProps {
   GraphInfo: GraphResponse,
@@ -168,6 +182,7 @@ const GraphCard : React.FC<GraphCardProps> = ({
     }
 
     return (
+        <NativeBaseProvider theme={theme}>
       <View bg="darkBlue.900">
         <ScrollView flexDirection={"column"} py='3'>
           <Modal onClose={onClose} isOpen={isOpen} size="lg" borderColor={'transparent'}>
@@ -270,13 +285,36 @@ const GraphCard : React.FC<GraphCardProps> = ({
                   </LinearGradient>
                   }}
                 </Pressable>
-                <Pressable onPress={() => setDetailModalVisible(true)} alignItems='center' justifyContent={'center'}>
-                  <Icon size={"2xl"} as={Ionicons} name={"ellipsis-vertical-circle-outline"} color="#aba1ca" />
-                </Pressable>
+                {/*<Pressable onPress={() => setDetailModalVisible(true)} alignItems='center' justifyContent={'center'}>*/}
+                {/*  <Icon size={"2xl"} as={Ionicons} name={"ellipsis-vertical-circle-outline"} color="#aba1ca" />*/}
+                {/*</Pressable>*/}
+                  <Menu w="200" my={'3'} shadow={'1'} bg={'darkBlue.900'} placement={"bottom right"} trigger={triggerProps => {
+                      return <Pressable accessibilityLabel="More options menu" {...triggerProps}>
+                          <Icon size="4xl" as={Ionicons} name={"ellipsis-vertical-circle-outline"} color="#aba1ca" />
+                      </Pressable>;
+                        }}>
+                      <Menu.Item flexDirection='row' px='3' _focus={{bg:"darkBlue.900"}} _pressed={{bg:"rgb(32,27,64)"}} onPress={()=> {deployGraph()}} alignItems={'center'}>
+                          <Icon as={Ionicons} name='play-outline' color='green.900' size='md' mr='2'/>
+                          <Text color='#aba1ca' fontSize={'lg'}>Start</Text>
+                      </Menu.Item>
+                      <Menu.Item flexDirection='row' px='3' _focus={{bg:"darkBlue.900"}} _pressed={{bg:"rgb(32,27,64)"}} onPress={()=> {changeGraphState(GraphStateEnum.Restarting)}} alignItems={'center'}>
+                          <Icon as={Ionicons} name='play-outline' color='green.900' size='md' mr='2'/>
+                          <Text color='#aba1ca' fontSize={'lg'}>Force restart</Text>
+                      </Menu.Item>
+                      <Menu.Item flexDirection='row' px='3' _focus={{bg:"darkBlue.900"}} _pressed={{bg:"rgb(32,27,64)"}} onPress={()=> {changeGraphState(GraphStateEnum.Stopped)}} alignItems={'center'}>
+                          <Icon as={Ionicons} name='stop-outline' color='blue.900' size='md' mr='2'/>
+                          <Text color='#aba1ca' fontSize={'lg'}>Stop</Text>
+                      </Menu.Item>
+                      <Menu.Item flexDirection='row' px='3' _focus={{bg:"darkBlue.900"}} _pressed={{bg:"rgb(32,27,64)"}} onPress={()=> {removeGraph()}} alignItems={'center'}>
+                          <Icon as={Ionicons} name='trash-outline' color='red.900' size='md' mr='2'/>
+                          <Text color='#aba1ca' fontSize={'lg'}>Delete</Text>
+                      </Menu.Item>
+                  </Menu>
               </HStack>
           </Box>
         </ScrollView>
       </View>
+        </NativeBaseProvider>
     )
   }
 

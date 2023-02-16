@@ -37,10 +37,10 @@ interface TemplatesProps {
 const theme = extendTheme({
   shadows:{
     "1": {
-      "box-shadow": "0 0 35px rgba(56,8,255,0.1), 0 0 15px rgb(7,125,255,0.3), 0 0 0 1px rgb(7,125,255,0.3)"
+      "box-shadow": "0 0 35px rgba(56,8,255,0.3), 0 0 15px rgb(7,125,255,0.5), 0 0 0 1px rgb(7,125,255,0.5)"
     },
     "0": {
-      "box-shadow": "0 0 35px rgba(0,0,0,.1), 0 0 15px rgba(0,0,0,.3), 0 0 0 1px rgba(0,0,0,.3)"
+      "box-shadow": "0 0 25px rgba(0,0,0,.3), 0 0 10px rgba(15,12,32,.5), 0 0 0 5px rgba(32,27,64,.5)"
     }
   }
 });
@@ -99,14 +99,14 @@ const Templates: React.FC<TemplatesProps> = ({ }) => {
       <ScrollView p={["7","10"]} flexDirection={"column"}>
         <Text fontSize={"xl"} color="white" textAlign={"center"} bold mb='3'>Template Wizard</Text>
 
-        <Box justifyContent={"stretch"} alignItems="center" bg="rgb(32,27,64)" flexDirection={"row"} borderRadius="50" px={["3","5","7"]} mb={["3","5","7"]} shadow={"0"}>
+        <Box justifyContent={"stretch"} alignItems="center" bg="rgb(32,27,64)" flexDirection={"row"} borderRadius="50" px={["3","5","7"]} mb={["3","5","7"]}>
           <Icon as={Ionicons} name="information-circle-outline" size="4" color="blue.800"/>
           <Text color="#aba1ca" fontSize={"ms"} p="2" lineHeight={'16'}>
             GraphLinq's Instant Deploy Wizard lets you choose a template, fill in variables and deploy it instantly without having to code or making any changes on the IDE
           </Text>
         </Box>
 
-        <VStack shadow={"1"}>
+        <VStack>
 
           {step &&
             <TemplatesList selectTemplate={selectTemplate} isLoading={isLoading} templateLoaded={templateLoaded} template={template} templates={templates} fileUpload={fileUpload} graphName={graphName} setGraphName={setGraphName} updateStep={updateStep} />
@@ -146,16 +146,16 @@ const TemplatesList = (props : any) => {
 
   return (
     <NativeBaseProvider theme={theme}>
-      <Box justifyContent={"center"} flexDirection={"column"} bg="rgb(32,27,64)" borderRadius="12" px={["7","10"]} py={["3","5","7"]} mb="5" shadow="1">
+      <Box justifyContent={"center"} flexDirection={"column"} bg="rgb(32,27,64)" borderRadius="12" px={["7","10"]} py={["3","5","7"]} mb="5">
           <Box justifyContent={"left"} >
             <Text color="white" fontSize={"xl"} bold mb="3"> Name Your Graph:</Text>
             <Input variant="underlined" color="#aba1ca" fontSize={"md"} mb="7" placeholder="Graph Name" value={props.graphName} onChange={(e) => { props.setGraphName(e.target.value) }}/>
             <Text color="white" fontSize={"xl"} bold mb="2"> Templates:</Text>
           </Box>
 
-          <ScrollView h="490" >
+          <ScrollView  h="490">
           {props.templateLoaded?
-           <FlatList shadow="1" numColumns={2} m="1" data={props.templates}//props.templates
+           <FlatList numColumns={2} m="1" data={props.templates}//props.templates
               renderItem={({
                 item
               }) => {

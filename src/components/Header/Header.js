@@ -10,6 +10,17 @@ import { useSelector } from "react-redux";
 
 const windowWidth = Dimensions.get('screen').width;
 
+const theme = extendTheme({
+    shadows:{
+        "1": {
+            "box-shadow": "0 0 35px rgba(56,8,255,0.3), 0 0 15px rgb(7,125,255,0.5), 0 0 0 1px rgb(7,125,255,0.5)"
+        },
+        "0": {
+            "box-shadow": "0 0 15px rgba(32,27,64,.3), 0 0 10px rgba(15,12,32,.5), 0 0 0 5px rgba(0,0,0,.1)"
+        }
+    }
+});
+
 export default function Header(props){
 
   const [detailModalVisible, setDetailModalVisible] = useState(false);
@@ -31,17 +42,6 @@ export default function Header(props){
       link : "https://t.me/graphlinq"
   }
   ];
-
-  const theme = extendTheme({
-    shadows:{
-      "1": {
-        "box-shadow": "0 0 35px rgba(56,8,255,0.1), 0 0 15px rgb(7,125,255,0.3), 0 0 0 1px rgb(7,125,255,0.3)"
-      },
-      "0": {
-        "box-shadow": "0 0 35px rgba(0,0,0,.1), 0 0 15px rgba(0,0,0,.3), 0 0 0 1px rgba(0,0,0,.3)"
-      }
-    }
-  });
 
   function formatCur(num, min, max) {
         const formatConfig = {
@@ -78,7 +78,7 @@ const navigation = useNavigation();
 
   return(
   <NativeBaseProvider theme={theme}>
-    <View style={headerStyles.container} py="2" px="3" shadow="1">
+    <View style={headerStyles.container} py="2" px="3" shadow="0">
       <Modal isOpen={detailModalVisible} onClose={setDetailModalVisible} size={"lg"} borderRadius="32" >
         <Modal.Content maxH="250" borderRadius="15">
           <Modal.CloseButton />
@@ -135,19 +135,15 @@ const navigation = useNavigation();
           </VStack>
         )
         }
-        {/*<Pressable onPress={()=> setDetailModalVisible(true)} >*/}
-        {/*  <Icon size="4xl" as={Ionicons} name={"ellipsis-vertical-circle-outline"} color="#aba1ca" />*/}
-        {/*</Pressable>*/}
-
-          <Menu w="200" bg={'darkBlue.900'} trigger={triggerProps => {
+          <Menu my='5' w="170" mx={'3'} bg={'darkBlue.900'} shadow={'1'} trigger={triggerProps => {
               return <Pressable accessibilityLabel="More options menu" {...triggerProps}>
                   <Icon size="4xl" as={Ionicons} name={"ellipsis-vertical-circle-outline"} color="#aba1ca" />
               </Pressable>;
           }}>
               {menuItems.map((item) => {
-                  return <Menu.Item key={item.id} isDisabled={'true'} flexDirection={'row'} alignItems={'center'}>
-                              <Icon as={Ionicons} name={item.name} size="sm" color={"blue.900"} mr={'3'}/>
-                              <Link href={item.link}  isUnderlined={false} isExternal _text={{fontSize:'sm', color:'white', flex:'1'}}>{item.desc}</Link>
+                  return <Menu.Item key={item.id} _focus={{bg:"darkBlue.900"}} _pressed={{bg:"rgb(32,27,64)"}} flexDirection={'row'} alignItems={'center'}>
+                              <Icon as={Ionicons} name={item.name} size="md" color={"blue.900"} mr={'3'} my={'1'}/>
+                              <Link href={item.link}  isUnderlined={false} isExternal _text={{fontSize:'md', color:'white', flex:'1'}}>{item.desc}</Link>
                       </Menu.Item>
               })}
           </Menu>

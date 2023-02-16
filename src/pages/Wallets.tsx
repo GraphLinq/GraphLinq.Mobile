@@ -59,12 +59,6 @@ const Wallets = (props: any) => {
         refreshfnc();
     }, [account]);
 
-    function truncate(str : any,length : any){
-        return str.length > length
-            ? str.slice(0, length) + '...'
-            : str;
-    }
-
     return (
     <NativeBaseProvider>
         <View style={{ flex: 1}} justifyContent="space-between" bg="darkBlue.900" width={windowWidth} height={windowHeight}  >
@@ -158,10 +152,11 @@ const Wallets = (props: any) => {
                                     {wallet.name}
                                 </Text>
                                 <Box display="flex" width={["30%", "55%"]} px={2} alignItems="center" flexDirection={'row'}>
-                                    <Link href={`https://etherscan.io/address/${wallet.publicKey}`}  isUnderlined={false} isExternal _text={{fontSize:'sm', color:'white', flex:'1'}}>
-                                         {/* {wallet.publicKey} */}
-                                        {truncate(wallet.publicKey,7)}
-                                    </Link>
+                                    <Text fontSize='sm' color='white' flex='1' isTruncated>
+                                        <Link href={`https://etherscan.io/address/${wallet.publicKey}`}  isUnderlined={false} isExternal>
+                                            {wallet.publicKey}
+                                        </Link>
+                                    </Text>
                                     <Icon as={Ionicons} name={"open-outline"} size="sm" color="#aba1ca" mx="4px" />
                                 </Box>
                                 <Spacer />

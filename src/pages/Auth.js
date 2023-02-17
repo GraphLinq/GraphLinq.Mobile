@@ -93,7 +93,9 @@ export default function Auth(props) {
               end:[1,0]
             }}}
             alignSelf="center"/>
-            <WalletManager onPageChanged={props.onPageChanged}/>
+            <Box px={'2'} py={'3'}>
+              <WalletManager onPageChanged={props.onPageChanged}/>
+            </Box>
           </Box>
           <View flexDirection={"row"} justifyContent={"center"}
             h={windowHeight*0.2}

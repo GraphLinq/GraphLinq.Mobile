@@ -44,7 +44,7 @@ const App= () => {
        <Web3ProviderNetwork getLibrary={getLibrary}>
         <NativeBaseProvider theme={theme}>
             <Web3ReactManager>
-                {pageType=='Auth'?
+              {pageType=='Auth'?
               <Auth onPageChanged={onPageChanged}/>
               : pageType=='Home'?
               <Home onPageChanged={onPageChanged}/>

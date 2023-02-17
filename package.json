@@ -33,8 +33,12 @@
     "@uniswap/sdk": "^3.0.3",
     "@web3-react/abstract-connector": "^6.0.7",
     "@web3-react/core": "^6.1.9",
+    "@web3-react/fortmatic-connector": "^6.1.6",
     "@web3-react/injected-connector": "^6.0.7",
+    "@web3-react/portis-connector": "^6.2.11",
     "@web3-react/types": "^6.0.7",
+    "@web3-react/walletconnect-connector": "^6.2.13",
+    "@web3-react/walletlink-connector": "^6.2.14",
     "babel-loader": "^9.1.2",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
@@ -45,6 +49,7 @@
     "expo-linear-gradient": "12.0.1",
     "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
+    "formatic": "^2.2.0",
     "native-base": "3.4.0",
     "react": "17.0.1",
     "react-device-detect": "^2.2.2",
@@ -69,6 +74,7 @@
     "@types/react-native": "~0.64.12",
     "@types/react-router": "^5.1.20",
     "babel-loader": "^9.1.2",
+    "fortmatic": "^2.4.0",
     "typescript": "~4.3.5"
   },
   "resolutions": {

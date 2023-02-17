@@ -94,15 +94,7 @@ const graphs = (props: any) => {
         {graphsList.length == 0 && loaded &&
           <View flexDirection='row' justifyContent='center' alignItems='center' bg='rgb(32,27,64)' borderRadius={'32'} p='3' my='1'>
             <Icon as={Ionicons} name="warning-outline" color='yellow.600' size='sm' mr='2'/>
-            <Text color='white' fontSize={'sm'}>You don't have created or deployed any graph yet, refer to our
-            <Link marginLeft="1"
-              href="https://docs.graphlinq.io/graph"
-              isExternal _text={{color:'amber.600'}}
-              _hover={{ color: 'amber.700' }}
-              display={{ base: 'block', sm: 'revert' }}
-              >documentation </Link>
-              to start your journey.
-            </Text>
+            <Text color='white' fontSize={'sm'}>You don't have created or deployed any graph yet, refer to our<Link marginLeft="1" href="https://docs.graphlinq.io/graph" isExternal _text={{color:'amber.600'}} >documentation</Link> to start your journey.</Text>
           </View>
         }
         {graphsList.length > 0 &&

@@ -10,16 +10,6 @@ import { useSelector } from "react-redux";
 
 const windowWidth = Dimensions.get('screen').width;
 
-const theme = extendTheme({
-    shadows:{
-        "1": {
-            "box-shadow": "0 0 35px rgba(56,8,255,0.3), 0 0 15px rgb(7,125,255,0.5), 0 0 0 1px rgb(7,125,255,0.5)"
-        },
-        "0": {
-            "box-shadow": "0 0 15px rgba(32,27,64,.3), 0 0 10px rgba(15,12,32,.5), 0 0 0 5px rgba(0,0,0,.1)"
-        }
-    }
-});
 
 export default function Header(props){
 
@@ -77,7 +67,6 @@ const navigation = useNavigation();
   let amountBalance = useSelector((state) => state.modals.balance.amount);
 
   return(
-  <NativeBaseProvider theme={theme}>
     <View style={headerStyles.container} py="2" px="3" shadow="0">
       <Modal isOpen={detailModalVisible} onClose={setDetailModalVisible} size={"lg"} borderRadius="32" >
         <Modal.Content maxH="250" borderRadius="15">
@@ -149,7 +138,6 @@ const navigation = useNavigation();
           </Menu>
       </View>
     </View>
-  </NativeBaseProvider>
   )
 }
 

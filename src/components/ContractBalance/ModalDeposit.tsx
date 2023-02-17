@@ -1,15 +1,15 @@
 import React,{useState} from 'react';
 import {
-  View,
-  Text,
-  Box,
-  Icon,
-  Modal,
-  IconButton,
-  Pressable,
-  Input,
-  Link,
-  HStack
+    View,
+    Text,
+    Box,
+    Icon,
+    Modal,
+    IconButton,
+    Pressable,
+    Input,
+    Link,
+    HStack, extendTheme, NativeBaseProvider
 } from 'native-base';
 import { useBalanceContract, useTokenContract } from '../../hooks/useContract';
 import { useActiveWeb3React } from '../../hooks';
@@ -29,7 +29,7 @@ const ModalDeposit = (props : any) => {
 
     const {balance, refreshBalance} =  useBalance();
     const {refreshBalanceContract} =  useWalletContract();
-    
+
     const { account } = useActiveWeb3React()
     const [amountDeposit, setAmountDeposit] = useState('0.0');
     const [error, setError] = useState("");
@@ -47,9 +47,9 @@ const ModalDeposit = (props : any) => {
         const asNumber = parseFloat(amountDeposit)
         if (asNumber <= 0) {
             setError(`Invalid amount to deposit on the balance contract: ${asNumber} GLQ`)
-            return 
+            return
         }
-        
+
         const decimalAmount :any = utils.parseEther(amountDeposit)
         try {
             const allowance = await tokenContract.allowance(account, REACT_APP_GRAPHLINQ_BALANCE_CONTRACT);
@@ -80,11 +80,11 @@ const ModalDeposit = (props : any) => {
         {
             console.error(e)
             if (e.data?.message) { setPending(""); setError(`Error: ${e.data?.message}`);return; }
-            
+
             if(e.message.includes('user rejected transaction')){
               setError('Error: MetaMask Tx Signature: User Denied transaction signature.')
-            }else if (e.message) { 
-              setPending(""); setError(`Error: ${e.message}`); 
+            }else if (e.message) {
+              setPending(""); setError(`Error: ${e.message}`);
             }
         }
     }
@@ -117,7 +117,7 @@ const ModalDeposit = (props : any) => {
                       <br/>Transaction hash : <Link href={`https://etherscan.com/tx/${success}`} isUnderlined={false} _text={{fontSize:'xs'}} isExternal>{success}</Link></Text>
                   </View>
                 }
-              
+
                 <Box bg="black" borderRadius={"32"} mx="3" flexDirection={"row"} alignItems="center" justifyContent={"space-between"} w="95%">
                   {/* <Text color="white" fontSize={"xl"} ml="5">{amountDeposit} GLQ</Text> */}
                   <Input color='white' value={amountDeposit} fontSize='xl' variant={'unstyled'} bg='transparent' size='sm' onChangeText={handleChange} flex='7'/>
@@ -125,32 +125,32 @@ const ModalDeposit = (props : any) => {
                       <Text textAlign={'center'} color='white' fontSize="xl" bg='transparent' mr='2'>GLQ</Text>
                       <Box flexDirection={"column"} borderLeftColor={"rgb(32,27,64)"} borderLeftWidth="1">
                         <IconButton variant={"ghost"} borderTopRightRadius="32" h="5" w="5"
-                        icon={<Icon as={Ionicons} name="caret-up" /> } 
+                        icon={<Icon as={Ionicons} name="caret-up" /> }
                         _icon={{color:"rgb(32,27,64)", size:"sm"}}
                         _pressed={{backgroundColor:"white"}}
                         onPress={() => {
                           let currentAmount = parseFloat(amountDeposit);
                           currentAmount += 0.1;
-                          setAmountDeposit(currentAmount.toString()); 
+                          setAmountDeposit(currentAmount.toString());
                         }}
                         />
                         <IconButton variant={"ghost"} borderBottomRightRadius="32" h="5" w="5"
-                        icon={<Icon as={Ionicons} name="caret-down" />} 
+                        icon={<Icon as={Ionicons} name="caret-down" />}
                         _icon={{color:"rgb(32,27,64)", size:"sm"}}
                         _pressed={{backgroundColor:"white"}}
                         onPress={() => {
                           let currentAmount= parseFloat(amountDeposit);
                           if(currentAmount > 0.0){
                             currentAmount -= 0.1;
-                            setAmountDeposit(currentAmount.toString()); 
-                          }                  
+                            setAmountDeposit(currentAmount.toString());
+                          }
                         }}
                         />
                       </Box>
                     </HStack>
                 </Box>
 
-                <Pressable mt="5" onPress={doDeposit} w='70%' justifyContent={'center'} alignItems='center' alignSelf={'center'}> 
+                <Pressable mt="5" onPress={doDeposit} w='70%' justifyContent={'center'} alignItems='center' alignSelf={'center'} >
                     {({isPressed}) => {
                         return <LinearGradient
                             colors={['rgb(56,8,255)', 'rgb(7,125,255)']}
@@ -162,7 +162,7 @@ const ModalDeposit = (props : any) => {
                             transform: [{scale: isPressed ? 0.95 : 1}]
                             }}
                             justifyContent="center"
-                            alignItems={"center"} 
+                            alignItems={"center"}
                         >
                         <View mx='10' style={{borderRadius:32}}  justifyContent="center" p="2" alignItems={'center'} textAlign='center'>
                           <Text textAlign={"center"} color="white" fontSize={"sm"} bold>Deposit</Text>

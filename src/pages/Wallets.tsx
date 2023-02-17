@@ -1,20 +1,20 @@
 import React,{useEffect, useState} from "react";
 import {
-  Text,
-  Link,
-  HStack,
-  VStack,
-  Box,
-  ScrollView,
-  View,
-  Button,
-  Icon,
-  Input,
-  NativeBaseProvider,
-  useClipboard,
-  Stack,
-  Spinner,
-  Spacer
+    Text,
+    Link,
+    HStack,
+    VStack,
+    Box,
+    ScrollView,
+    View,
+    Button,
+    Icon,
+    Input,
+    NativeBaseProvider,
+    useClipboard,
+    Stack,
+    Spinner,
+    Spacer, extendTheme
 } from "native-base";
 
 import { Dimensions } from 'react-native';
@@ -29,6 +29,9 @@ import Clipboard from '@react-native-clipboard/clipboard';
 
 const windowWidth = Dimensions.get('screen').width;
 const windowHeight = Dimensions.get('screen').height;
+
+const LinearGradient = require('expo-linear-gradient').LinearGradient ;
+
 
 const Wallets = (props: any) => {
     const [reachable, setReacheable] = useState(true);
@@ -62,7 +65,6 @@ const Wallets = (props: any) => {
     }, [account]);
 
     return (
-    <NativeBaseProvider>
         <View style={{ flex: 1}} justifyContent="space-between" bg="darkBlue.900" width={windowWidth} height={windowHeight}  >
             <ScrollView flexDirection={"column"} p={["7","10"]}>
                 <HStack justifyContent={'space-between'} alignItems='center' mb='3' maxW={'400'}>
@@ -173,7 +175,6 @@ const Wallets = (props: any) => {
                 )}
             </ScrollView>
         </View>
-    </NativeBaseProvider>
     )
 }
 

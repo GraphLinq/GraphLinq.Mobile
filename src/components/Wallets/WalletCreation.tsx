@@ -22,7 +22,7 @@ interface WalletCreationProps {
 }
 
  const WalletCreation: React.FC<WalletCreationProps> = (props) =>{
-    const { isOpen, onOpen, onClose } = useDisclose();
+    const [modalVisible, setModalVisible] = useState(false);
     const [walletName, setWalletName] = useState("");
     const handleChange = (event: any) => setWalletName(event.target.value)
 
@@ -36,21 +36,21 @@ interface WalletCreationProps {
 
             if (result instanceof String) {
                 props.setSuccess(result)
-                onClose();
+                setModalVisible(false);
             } else {
                 props.setError(result)
-                onClose();
+                setModalVisible(false);
             }
         }
         catch (e) {
             console.error(e)
             props.setError(`An error occured while creating your wallet: ${e}`)
-            onClose();
+            setModalVisible(false);
         }
     }
 
     return <>
-        <Pressable onPress={onOpen}>
+        <Pressable onPress={()=>setModalVisible(true)}>
             {({isPressed}) => {
                 return <LinearGradient
                     colors={['rgb(56,8,255)', 'rgb(7,125,255)']}
@@ -69,8 +69,8 @@ interface WalletCreationProps {
             </LinearGradient>
             }}
         </Pressable>
-        <Modal isOpen={isOpen} onClose={onClose} size={"lg"} borderRadius="32" >
-            <Modal.Content maxH="250" borderRadius="15">
+        <Modal isOpen={modalVisible} onClose={()=>setModalVisible(false)} size={"lg"} borderRadius="32" >
+            <Modal.Content maxH="275" borderRadius="15">
                 <Modal.CloseButton />
                 <Modal.Header bg="rgb(32,27,64)" borderColor={"transparent"}><Text color="#aba1ca" fontSize={"lg"}>More</Text></Modal.Header>
                 <Modal.Body bg="rgb(32,27,64)">
@@ -98,7 +98,7 @@ interface WalletCreationProps {
                             </LinearGradient>
                         }}
                         </Pressable>
-                        <Button variant="ghost" colorScheme="blueGray" onPress={() => {onClose}}>
+                        <Button variant="ghost" colorScheme="blueGray" onPress={() => {setModalVisible(false);}}>
                             <Text color="#aba1ca" fontSize={"md"} bold>Cancel</Text>
                         </Button>
                     </View>

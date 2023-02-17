@@ -27,16 +27,6 @@ import { Log } from '../../providers/responses/logs';
 
 const LinearGradient = require('expo-linear-gradient').LinearGradient ;
 
-const theme = extendTheme({
-    shadows:{
-        "1": {
-            "box-shadow": "0 0 35px rgba(56,8,255,0.3), 0 0 15px rgb(7,125,255,0.5), 0 0 0 1px rgb(7,125,255,0.5)"
-        },
-        "0": {
-            "box-shadow": "0 0 35px rgba(0,0,0,.1), 0 0 15px rgba(0,0,0,.3), 0 0 0 1px rgba(0,0,0,.3)"
-        }
-    }
-});
 
 interface GraphCardProps {
   GraphInfo: GraphResponse,
@@ -75,7 +65,7 @@ const GraphCard : React.FC<GraphCardProps> = ({
     ...props
 }) => {
     const [detailModalVisible, setDetailModalVisible] = useState(false);
-
+    const [showModal, setShowModal] = useState(false);
     const [logs, setLogs] = React.useState([])
     const { isOpen, onOpen, onClose } = useDisclose()
     const [inLogs, setInLogs] = React.useState<boolean>(false);
@@ -182,18 +172,17 @@ const GraphCard : React.FC<GraphCardProps> = ({
     }
 
     return (
-        <NativeBaseProvider theme={theme}>
       <View bg="darkBlue.900">
         <ScrollView flexDirection={"column"} py='3'>
-          <Modal onClose={onClose} isOpen={isOpen} size="lg" borderColor={'transparent'} shadow={'1'}>
-            <Modal.Content borderRadius={'15'} maxH='300'>
+          <Modal onClose={onClose} isOpen={isOpen} size="lg" borderColor={'transparent'}>
+            <Modal.Content borderRadius={'15'} maxH='350'>
               <Modal.Header bg="rgb(32,27,64)" borderColor={'transparent'} h='50' justifyContent={'center'} alignItems='flex-start' pl='5'><Text color='white' fontSize='xl' bold>Logs</Text></Modal.Header>
               <Modal.CloseButton />
               <Modal.Body bg="rgb(32,27,64)">
                 <ScrollView p='3'>
                   {logs === undefined && <Text color="amber.500">No logs available...</Text>}
                   {logs !== undefined && logs.map((x: Log, i: number) => {
-                    return <Text fontSize={'md'} color={'white'} key={`txt-${i}`}>[{x.type}] ({new Date(x.timestamp).toLocaleString()}):<br /> {x.message}</Text>
+                    return <Text fontSize={'sm'} color={'white'} key={`txt-${i}`}>[{x.type}] ({new Date(x.timestamp).toLocaleString()}):<br /> {x.message}</Text>
                   })}
                   <View ref={bottomRef}></View>
                 </ScrollView>
@@ -204,12 +193,12 @@ const GraphCard : React.FC<GraphCardProps> = ({
             </Modal.Content>
           </Modal>
 
-          <Modal isOpen={detailModalVisible} onClose={setDetailModalVisible} size={"md"} borderRadius="32" >
+          <Modal isOpen={detailModalVisible} onClose={()=>setDetailModalVisible(false)} size={"md"} borderRadius="32" >
             <Modal.Content maxH="350" borderRadius="15">
               <Modal.CloseButton />
                 <Modal.Header bg="rgb(32,27,64)" borderColor={"transparent"}><Text color="#aba1ca" fontSize={"lg"}>More</Text></Modal.Header>
                 <Modal.Body bg="darkBlue.900" px='3' alignItems={'left'} justifyContent='flex-start'>
-                  <Pressable onPress={() => { deployGraph() }}>
+                  <Pressable onPress={() => { deployGraph(); setDetailModalVisible(false); }}>
                     {()=>{
                       return <View alignItems={'flex-start'} flexDirection='row' px='3'>
                         <Icon as={Ionicons} name='play-outline' color='green.900' size='md' mr='2'/>
@@ -217,7 +206,7 @@ const GraphCard : React.FC<GraphCardProps> = ({
                         </View>
                     }}
                   </Pressable>
-                  <Pressable onPress={() => { changeGraphState(GraphStateEnum.Restarting) }}>
+                  <Pressable onPress={() => { changeGraphState(GraphStateEnum.Restarting); setDetailModalVisible(false);}}>
                     {()=>{
                       return <View alignItems={'flex-start'} flexDirection='row' px='3'>
                         <Icon as={Ionicons} name='play-outline' color='green.900' size='md' mr='2'/>
@@ -225,7 +214,7 @@ const GraphCard : React.FC<GraphCardProps> = ({
                         </View>
                     }}
                   </Pressable>
-                  <Pressable onPress={() => { changeGraphState(GraphStateEnum.Stopped) }}>
+                  <Pressable onPress={() => { changeGraphState(GraphStateEnum.Stopped); setDetailModalVisible(false); }}>
                     {()=>{
                       return <View alignItems={'flex-start'} flexDirection='row' px='3'>
                         <Icon as={Ionicons} name='stop-outline' color='blue.900' size='md' mr='2'/>
@@ -233,7 +222,7 @@ const GraphCard : React.FC<GraphCardProps> = ({
                         </View>
                     }}
                   </Pressable>
-                  <Pressable onPress={() => { removeGraph() }}>
+                  <Pressable onPress={() => { removeGraph(); setDetailModalVisible(false); }}>
                     {()=>{
                       return <View alignItems={'flex-start'} flexDirection='row' px='3'>
                         <Icon as={Ionicons} name='trash-outline' color='red.900' size='md' mr='2'/>
@@ -288,7 +277,7 @@ const GraphCard : React.FC<GraphCardProps> = ({
                 {/*<Pressable onPress={() => setDetailModalVisible(true)} alignItems='center' justifyContent={'center'}>*/}
                 {/*  <Icon size={"2xl"} as={Ionicons} name={"ellipsis-vertical-circle-outline"} color="#aba1ca" />*/}
                 {/*</Pressable>*/}
-                  <Menu w="200" my={'3'} shadow={'1'} bg={'darkBlue.900'} placement={"bottom right"} trigger={triggerProps => {
+                  <Menu w="200" my={'3'} shadow={'1'} bg={'darkBlue.900'} placement={"bottom right"} zIndex={'1'} trigger={triggerProps => {
                       return <Pressable accessibilityLabel="More options menu" {...triggerProps}>
                           <Icon size="4xl" as={Ionicons} name={"ellipsis-vertical-circle-outline"} color="#aba1ca" />
                       </Pressable>;
@@ -314,7 +303,6 @@ const GraphCard : React.FC<GraphCardProps> = ({
           </Box>
         </ScrollView>
       </View>
-        </NativeBaseProvider>
     )
   }
 

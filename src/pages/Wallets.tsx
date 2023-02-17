@@ -65,13 +65,13 @@ const Wallets = (props: any) => {
     <NativeBaseProvider>
         <View style={{ flex: 1}} justifyContent="space-between" bg="darkBlue.900" width={windowWidth} height={windowHeight}  >
             <ScrollView flexDirection={"column"} p={["7","10"]}>
-                <HStack justifyContent={'space-between'} alignItems='center' mb='3'>
+                <HStack justifyContent={'space-between'} alignItems='center' mb='3' maxW={'400'}>
                     <Text fontSize={"xl"} color="white" textAlign={"center"} bold mb='3'>My Wallets</Text>
                     <WalletCreation setSuccess={setSuccess} setError={setError}/>
                 </HStack>
 
                 {reachable && !loaded &&
-                <Stack w='100' justifyContent={'center'} alignItems='center' alignSelf='center' mt='50'>
+                <Stack w='100' justifyContent={'center'} alignItems='center' alignSelf='center' mt='50' maxW={'400'}>
                     <Spinner
                     color="#2334ff"
                     size="md"
@@ -79,24 +79,24 @@ const Wallets = (props: any) => {
                 </Stack>
                 }
                 {walletList.length == 0 && loaded && (
-                    <View flexDirection='row' justifyContent='center' alignItems='center' bg='rgb(32,27,64)' borderRadius={'32'} p='3' my='1'>
+                    <View flexDirection='row' justifyContent='center' alignItems='center' bg='rgb(32,27,64)' borderRadius={'32'} p='3' my='1' maxW={'400'}>
                         <Icon as={Ionicons} name="warning-outline" color='yellow.600' size='sm' mr='2'/>
                         <Text color='white' fontSize={'sm'}>You don't have any managed wallet yet.</Text>
                     </View>
                 )}
                 {error && (
-                    <View  textAlign='center' flexDirection='row' justifyContent='center' alignItems='center' bg='rgb(32,27,64)' borderRadius={'32'} p='3' my='1'>
+                    <View maxW={'400'} textAlign='center' flexDirection='row' justifyContent='center' alignItems='center' bg='rgb(32,27,64)' borderRadius={'32'} p='3' my='1'>
                         <Icon as={FontAwesome} name="times-circle" color='#ff294c'  size='md' mr='2'/>
                         <Text color="white" fontSize={'sm'}>{error}</Text>
                     </View>
                 )}
                 {success && (
                 <>
-                    <View textAlign='center' flexDirection='row' justifyContent='center' alignItems='center'  bg='rgb(32,27,64)' borderRadius={'32'} p='3' my='1'>
+                    <View maxW={'400'} textAlign='center' flexDirection='row' justifyContent='center' alignItems='center'  bg='rgb(32,27,64)' borderRadius={'32'} p='3' my='1'>
                         <Icon as={FontAwesome} name="check-circle" color='#59b819' size='md' mr='2'/>
                         <Text color='white' fontSize={'sm'}>Wallet created !</Text>
                     </View>
-                    <View textAlign="left" flexDir="column" flexWrap="nowrap" justifyContent='center' alignItems='center'  bg='rgb(32,27,64)' borderRadius={'32'} p='3' my='1'>
+                    <View maxW={'400'} textAlign="left" flexDir="column" flexWrap="nowrap" justifyContent='center' alignItems='center'  bg='rgb(32,27,64)' borderRadius={'32'} p='3' my='1'>
                         <Icon as={FontAwesome} name="info-circle" color='rgb(32,27,64)' size='md' mr='2'/>
                         <Text color='white' fontSize={'sm'}>Please save your private key as it won't be available again and therefore encrypted in our network.</Text>
                         <Box w="full" my='3' justifyContent={'center'} alignItems='center'>
@@ -122,7 +122,7 @@ const Wallets = (props: any) => {
                 </>
                 )}
                 {walletList.length > 0 && (
-                <VStack>
+                <VStack maxW={'400'}>
                     <Box display="flex" alignItems="center" w="full" px="2" py="3" rounded="lg" flexDirection={'row'}>
                         <Box display="flex" width="25%" px={2}>
                             <Text color="#aba1ca" fontSize={"md"}>Wallet name</Text>

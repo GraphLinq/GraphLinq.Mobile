@@ -71,14 +71,14 @@ const graphs = (props: any) => {
     <View style={{ flex: 1 }} justifyContent="space-between" bg="darkBlue.900" width={windowWidth} height={windowHeight} >
       <ScrollView flexDirection={"column"} p={["7","10"]} >
         <Text fontSize={"xl"} color="white" textAlign={"center"} bold mb='3'>Graphs</Text>
-        <Box justifyContent={"stretch"} alignItems="center" bg="rgb(32,27,64)" flexDirection={"row"} borderRadius="50" px={["3","5","7"]} mb={["3","5","7"]}>
+        <Box justifyContent={"stretch"} alignItems="center" bg="rgb(32,27,64)" flexDirection={"row"} borderRadius="50" px={["3","5","7"]} mb={["3","5","7"]} maxW={'400'}>
           <Icon as={Ionicons} name="information-circle-outline" size="4" color="blue.800"/>
           <Text color="#aba1ca" fontSize={"sm"} p="1" lineHeight={'16'}>
             Below is the list of your Graphs. You can view logs, stop or delete each one of them.
           </Text>
         </Box>
         {reachable && !loaded &&
-        <Stack w='100' justifyContent={'center'} alignItems='center' alignSelf='center' mt='30'>
+        <Stack w='100' justifyContent={'center'} alignItems='center' alignSelf='center' mt='30' >
           <Spinner
             color="#2334ff"
             size="md"
@@ -86,19 +86,19 @@ const graphs = (props: any) => {
         </Stack>
         }
         {!reachable &&
-          <View flexDirection='row' justifyContent='center' alignItems='center' bg='rgb(32,27,64)' borderRadius={'32'} p='3' my='1'>
+          <View flexDirection='row' justifyContent='center' alignItems='center' bg='rgb(32,27,64)' borderRadius={'32'} p='3' my='1' maxW={'400'}>
             <Icon as={FontAwesome} name="times-circle" color='#ff294c'  size='sm' mr='2'/>
             <Text color='white' fontSize={'ms'}>The engine main-net network can't be reached, please try again later or contact the <i>GraphLinq Support</i>.</Text>
           </View>
         }
         {graphsList.length == 0 && loaded &&
-          <View flexDirection='row' justifyContent='center' alignItems='center' bg='rgb(32,27,64)' borderRadius={'32'} p='3' my='1'>
+          <View flexDirection='row' justifyContent='center' alignItems='center' bg='rgb(32,27,64)' borderRadius={'32'} p='3' my='1' maxW={'400'}>
             <Icon as={Ionicons} name="warning-outline" color='yellow.600' size='sm' mr='2'/>
             <Text color='white' fontSize={'sm'}>You don't have created or deployed any graph yet, refer to our<Link marginLeft="1" href="https://docs.graphlinq.io/graph" isExternal _text={{color:'amber.600'}}>documentation</Link> to start your journey.</Text>
           </View>
         }
         {graphsList.length > 0 &&
-          <VStack mb={1} >
+          <VStack mb={1} maxW={'400'}>
             {graphsList.sort((a: GraphResponse, b: GraphResponse) => { return b.state - a.state }).map((x: GraphResponse, i: number) => {
               return <GraphCard key={`graph-${i}`} GraphInfo={x} />
             })}

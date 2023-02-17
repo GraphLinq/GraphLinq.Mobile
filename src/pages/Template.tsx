@@ -53,6 +53,7 @@ const Templates: React.FC<TemplatesProps> = ({ }) => {
   const [template, selectedTemplate] = useState({ loaded: false, template: { bytes: "", idgraphsTemplates: 0, title: "", description: "", customImg: "" } })
   const [templateLoaded, setTemplateLoaded] = useState(false)
   const [templates, setTemplates] = useState<GraphTemplate[]>([])
+  const scrollRef = React.useRef(5);
 
   useEffect(() => {
     const fetchTemplates = async () => {
@@ -62,8 +63,6 @@ const Templates: React.FC<TemplatesProps> = ({ }) => {
     }
     fetchTemplates()
   }, [])
-
-
 
   const [step, setStep] = useState(true);
 
@@ -84,6 +83,7 @@ const Templates: React.FC<TemplatesProps> = ({ }) => {
     });
   }
 
+
   function selectTemplate(e: any){
     const template = templates.find(x => x.key === e)
         if (template !== undefined) {
@@ -92,28 +92,38 @@ const Templates: React.FC<TemplatesProps> = ({ }) => {
     }
   }
 
+  const [contentVerticalOffset, setContentVerticalOffset] = useState(0);
+  const CONTENT_OFFSET_THRESHOLD = 300;
+
+  const setScrollPos = () => {
+    scrollRef.current.scrollTo({ y:0});
+  }
+
   return  (
   <NativeBaseProvider theme={theme}>
     <View style={{ flex: 1, alignItems: 'center',
                    justifyContent: 'center' }}  bg="darkBlue.900" width={windowWidth} height={windowHeight}>
-      <ScrollView p={["7","10"]} flexDirection={"column"}>
+      <ScrollView p={["7","10"]} flexDirection={"column"} ref={scrollRef} onScroll={event => {
+        setContentVerticalOffset(event.nativeEvent.contentOffset.y);}}
+        scrollEventThrottle={16}
+      >
         <Text fontSize={"xl"} color="white" textAlign={"center"} bold mb='3'>Template Wizard</Text>
 
-        <Box justifyContent={"stretch"} alignItems="center" bg="rgb(32,27,64)" flexDirection={"row"} borderRadius="50" px={["3","5","7"]} mb={["3","5","7"]}>
+        <Box maxW={'400'} justifyContent={"stretch"} alignItems="center" bg="rgb(32,27,64)" flexDirection={"row"} borderRadius="50" px={["3","5","7"]} mb={["3","5","7"]} maxW={'400'} >
           <Icon as={Ionicons} name="information-circle-outline" size="4" color="blue.800"/>
           <Text color="#aba1ca" fontSize={"ms"} p="2" lineHeight={'16'}>
             GraphLinq's Instant Deploy Wizard lets you choose a template, fill in variables and deploy it instantly without having to code or making any changes on the IDE
           </Text>
         </Box>
 
-        <VStack>
+        <VStack maxW={'400'}>
 
           {step &&
             <TemplatesList selectTemplate={selectTemplate} isLoading={isLoading} templateLoaded={templateLoaded} template={template} templates={templates} fileUpload={fileUpload} graphName={graphName} setGraphName={setGraphName} updateStep={updateStep} />
           }
           {!step &&
 
-            <TemplateVars templateData={graphData} graphName={graphName} templateName={template.template.title} templateDesc={template.template.description} step={step} setStep={setStep} />
+            <TemplateVars templateData={graphData} graphName={graphName} templateName={template.template.title} templateDesc={template.template.description} step={step} setStep={setStep} setScrollPos={setScrollPos}/>
 
           }
 
@@ -305,6 +315,7 @@ const TemplateVars = (props:any) => {
             deployGraphTemplate(data, props.graphName)
             setIsLoading(false)
         })
+    {props.setScrollPos()}
   }
 
   const resultRef = useRef<HTMLInputElement>(null)
@@ -346,7 +357,7 @@ const TemplateVars = (props:any) => {
       </Box>
       <Box justifyContent={'right'} my="3" flexDirection="row">
         <Button bgColor="transparent" variant="outline" _text={{color:"#c4b9e5"}} borderColor="#aba1ca" color="#aba1ca" _hover={{ bgColor: "#2334ff", borderColor: '#2334ff', color: "white" }} mr="5" onPress={previous}>Previous</Button>
-        <Button bgColor="#2334ff" color="white" _hover={{ bgColor: "#202cc3" }} onPress={()=> {console.log(props.graphName); console.log(props.templateName);console.log(props.templateDesc); deployTemplate();}} isLoading={isLoading} isLoadingText="Loading">Deploy</Button>
+        <Button bgColor="#2334ff" color="white" _hover={{ bgColor: "#202cc3" }} onPress={()=> {  console.log(props.graphName); console.log(props.templateName);console.log(props.templateDesc); deployTemplate();}} isLoading={isLoading} isLoadingText="Loading">Deploy</Button>
       </Box>
     </Box>
   )
